@@ -41,6 +41,7 @@ export default {
       default: day => day.date
     },
     disabledDates: Object,
+    enabledDates: Array,
     highlighted: Object,
     calendarClass: [String, Object, Array],
     calendarStyle: Object,
@@ -52,7 +53,22 @@ export default {
   data () {
     const constructedDateUtils = makeDateUtils(this.useUtc)
     return {
-      utils: constructedDateUtils
+      utils: constructedDateUtils,
+      cachedVerifiedDates: {},
+      enabledDatesFormatted: []
+    }
+  },
+  watch: {
+    enabledDates () {
+      this.cachedVerifiedDates = {}
+      this.enabledDates.forEach((dateString) => {
+        if (!dateString.match(/^(\d{4})-(\d{2})-(\d{2})/)) {
+          console.debug(`Invalid date format.\nGot: ${dateString}\nAnd expected: YYYY-MM-DD`)
+          return
+        }
+        const formattedDateString = dateString.split('T')[0]
+        this.cachedVerifiedDates[formattedDateString] = true
+      })
     }
   },
   computed: {
@@ -238,6 +254,12 @@ export default {
      */
     isDisabledDate (date) {
       let disabledDates = false
+
+      if (this.enabledDates && this.enabledDates.length > 0) {
+        let dateSplitString = date.toISOString().split('T')[0]
+
+        return !this.cachedVerifiedDates[dateSplitString]
+      }
 
       if (typeof this.disabledDates === 'undefined') {
         return false

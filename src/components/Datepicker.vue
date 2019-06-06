@@ -39,6 +39,7 @@
       :fullMonthName="fullMonthName"
       :allowedToShowView="allowedToShowView"
       :disabledDates="disabledDates"
+      :enabledDates="enabledDates"
       :highlighted="highlighted"
       :calendarClass="calendarClass"
       :calendarStyle="calendarStyle"
@@ -128,6 +129,7 @@ export default {
     dayCellContent: Function,
     fullMonthName: Boolean,
     disabledDates: Object,
+    enabledDates: Array,
     highlighted: Object,
     placeholder: String,
     inline: Boolean,
