@@ -671,7 +671,9 @@ var PickerDay = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
       var disabledDates = false;
 
       if (this.enabledDates && this.enabledDates.length > 0) {
-        var dateSplitString = date.toISOString().split('T')[0];
+        var dateSplitString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000))
+        .toISOString()
+        .split('T')[0];
 
         return !this.cachedVerifiedDates[dateSplitString]
       }

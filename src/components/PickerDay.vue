@@ -256,9 +256,9 @@ export default {
       let disabledDates = false
 
       if (this.enabledDates && this.enabledDates.length > 0) {
-        let dateSplitString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000 ))
+        let dateSplitString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000))
         .toISOString()
-        .split("T")[0]
+        .split('T')[0]
 
         return !this.cachedVerifiedDates[dateSplitString]
       }
